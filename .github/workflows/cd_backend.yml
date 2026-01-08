@@ -27,18 +27,7 @@ jobs:
         context: .
         file: ./docker/Dockerfile.backend
         push: true
-        tags: user123/todo-app-backend:${{github.sha}}
+        tags: trivendra07/todo-app-backend:${{github.sha}}
 
       ## steps to deploy it on VM
 
-    # - name: SSH and deploy
-    #   uses: appleboy/ssh-action@v0.1.7
-    #   with:
-    #     host: ${{ secrets.VM_HOST }}
-    #     username: ${{ secrets.VM_USERNAME }}
-    #     key: ${{ secrets.VM_SSH_KEY }}
-    #     script: |
-    #       docker pull ${{ secrets.DOCKERHUB_USERNAME }}/todo-backend:latest
-    #       docker stop todo-backend || true
-    #       docker rm todo-backend || true
-    #       docker run -d --name todo-backend -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/todo-backend:latest
