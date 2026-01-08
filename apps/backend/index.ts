@@ -37,7 +37,7 @@ app.post('/users', async (req, res) => {
 app.get('/users', async (req, res) => {
   try {
     const users = await prismaClient.user.findMany();
-    res.json(users);
+    res.json({users});
   } catch (error) {
     console.error(error);
     res.status(500).json({ 
