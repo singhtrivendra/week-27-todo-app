@@ -14,6 +14,6 @@ RUN bun install
 RUN bun add -d prisma@6 @prisma/client@6
 RUN bun run db:generate
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD [ "bun", "run", "start:websocket" ]
