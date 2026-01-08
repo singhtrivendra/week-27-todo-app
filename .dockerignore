@@ -1,0 +1,30 @@
+# dependencies
+node_modules
+**/node_modules
+
+# bun
+.bun
+**/.bun
+
+# build output
+.next
+dist
+build
+
+# logs
+npm-debug.log
+bun-debug.log
+
+# env
+.env
+.env.*
+
+# git
+.git
+.gitignore
+
+# docker
+docker-compose.yml
+
+# misc
+README.md
