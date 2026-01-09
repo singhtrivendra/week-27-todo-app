@@ -27,11 +27,12 @@ jobs:
         context: .
         file: ./docker/Dockerfile.backend
         push: true
-        tags: trivendra07/todo-app-backend:${{github.sha}}
+        tags: trivendra07/todo-app-backend:${{ github.sha }}
 
-      ## steps to deploy it on VM
+    ## steps to deploy it on VM
     - name: Deploy to VM
       run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
-          chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@195.35.20.98 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 trivendra07/todo-app-backend:${{ github.sha }}"
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+        chmod 700 /home/runner/ssh_key
+        ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@195.35.20.98 -t \
+        "docker stop user_backend || true && docker run --name user_backend -d -p 8080:8080 trivendra07/todo-app-backend:${{ github.sha }}"
