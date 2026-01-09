@@ -31,14 +31,7 @@ jobs:
 
       ## steps to deploy it on VM
     - name: Deploy to VM
-  run: |
-    mkdir -p ~/.ssh
-    echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-    chmod 600 ~/.ssh/id_rsa
-
-    ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@195.35.20.98 << EOF
-      docker stop user_backend || true
-      docker rm user_backend || true
-      docker pull trivendra07/todo-app-backend:${{ github.sha }}
-      docker run -d --name user_backend -p 8080:8080 trivendra07/todo-app-backend:${{ github.sha }}
-    EOF
+      run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+          chmod 700 /home/runner/ssh_key
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@195.35.20.98 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 trivendra07/todo-app-backend:${{ github.sha }}"
