@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { prismaClient } from "db";
 import type { JSX } from "react";
 
