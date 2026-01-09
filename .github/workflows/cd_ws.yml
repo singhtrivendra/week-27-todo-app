@@ -2,7 +2,7 @@
 ## Push the docker image to docker hub
 ## ssh into the vm and sart the new image
 
-name: Deploy websocket
+name: Deploy websocket server
 on:
   push:
     branches: [main]
