@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    restart: always
+
+  websocket:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.websocket
+    container_name: websocket
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+
+
+
+## Alternate way to deploy using prebuilt images from docker hub
+# version: "3.9"
+
+# services:
+#   backend:
+#     image: trivendra07/todo-app-backend:latest
+
+#   frontend:
+#     image: trivendra07/todo-app-frontend:latest
+
+#   websocket:
+#     image: trivendra07/todo-app-websocket:latest
